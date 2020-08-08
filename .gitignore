@@ -11,4 +11,7 @@ dist
 
 tmp/*
 !tmp/.gitkeep
+!tmp/uploads/
+
+tmp/uploads/*
 !tmp/uploads/user_placeholder.png
