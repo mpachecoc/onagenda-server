@@ -4,6 +4,7 @@ import { classToClass } from 'class-transformer';
 
 import CreateAppointmentService from '@modules/appointments/services/CreateAppointmentService';
 import ListUserAppointmentsService from '@modules/appointments/services/ListUserAppointmentsService';
+import DeleteAppointmentService from '@modules/appointments/services/DeleteAppointmentService';
 
 export default class AppointmentsController {
   public async index(request: Request, response: Response): Promise<Response> {
@@ -31,5 +32,17 @@ export default class AppointmentsController {
     });
 
     return response.json(appointment);
+  }
+
+  public async delete(request: Request, response: Response): Promise<Response> {
+    const { id } = request.params;
+
+    const deleteAppointment = container.resolve(DeleteAppointmentService);
+
+    await deleteAppointment.execute({
+      appointment_id: id,
+    });
+
+    return response.send();
   }
 }

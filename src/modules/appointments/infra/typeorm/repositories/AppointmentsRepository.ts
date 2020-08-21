@@ -14,6 +14,15 @@ class AppointmentsRepository implements IAppointmentsRepository {
     this.ormRepository = getRepository(Appointment);
   }
 
+  // Find By Id
+  public async findById(
+    appointment_id: string,
+  ): Promise<Appointment | undefined> {
+    const appointment = await this.ormRepository.findOne(appointment_id);
+
+    return appointment;
+  }
+
   // List Appointments by user_id
   public async findAll(user_id: string): Promise<Appointment[]> {
     const foundAppointments = await this.ormRepository.find({
@@ -97,6 +106,11 @@ class AppointmentsRepository implements IAppointmentsRepository {
     await this.ormRepository.save(appointment);
 
     return appointment;
+  }
+
+  // Delete Appointment
+  public async delete(appointment_id: string): Promise<void> {
+    await this.ormRepository.delete(appointment_id);
   }
 }
 
