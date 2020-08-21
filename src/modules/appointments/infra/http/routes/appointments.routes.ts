@@ -21,6 +21,19 @@ appointmentsRouter.post(
   }),
   appointmentsController.create,
 );
+
+appointmentsRouter.get('/', appointmentsController.index);
+
+appointmentsRouter.delete(
+  '/:id',
+  celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().uuid().required(),
+    },
+  }),
+  appointmentsController.delete,
+);
+
 appointmentsRouter.get('/me', providerAppointmentsController.index);
 
 export default appointmentsRouter;
