@@ -1,5 +1,5 @@
 import { injectable, inject } from 'tsyringe';
-import { format } from 'date-fns';
+import { format, isBefore } from 'date-fns';
 
 import AppError from '@shared/errors/AppError';
 
@@ -27,6 +27,10 @@ class ListUserAppointmentsService {
 
     if (!appointment) {
       throw new AppError('Appointment not found.');
+    }
+
+    if (isBefore(appointment.date, Date.now())) {
+      throw new AppError('Passed appointment cannot be deleted.');
     }
 
     await this.appointmentsRepository.delete(appointment_id);
