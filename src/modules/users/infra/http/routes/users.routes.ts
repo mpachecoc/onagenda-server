@@ -27,7 +27,18 @@ usersRouter.post(
   usersController.create,
 );
 
-usersRouter.get('/', usersController.index);
+usersRouter.get('/', ensureAuthenticated, usersController.index);
+
+usersRouter.get(
+  '/:id',
+  ensureAuthenticated,
+  celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().uuid().required(),
+    },
+  }),
+  usersController.single,
+);
 
 usersRouter.patch(
   '/avatar',

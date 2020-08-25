@@ -4,6 +4,7 @@ import { classToClass } from 'class-transformer';
 
 import ListUsersService from '@modules/users/services/ListUsersService';
 import CreateUserService from '@modules/users/services/CreateUserService';
+import GetUserService from '@modules/users/services/GetUserService';
 
 export default class UsersController {
   public async index(request: Request, response: Response): Promise<Response> {
@@ -16,6 +17,18 @@ export default class UsersController {
     });
 
     return response.json(classToClass(users));
+  }
+
+  public async single(request: Request, response: Response): Promise<Response> {
+    const { id } = request.params;
+
+    const getUser = container.resolve(GetUserService);
+
+    const user = await getUser.execute({
+      id,
+    });
+
+    return response.json(classToClass(user));
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
