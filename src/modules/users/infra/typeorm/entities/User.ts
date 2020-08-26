@@ -30,6 +30,9 @@ class User {
   @Column()
   is_provider: boolean;
 
+  @Column()
+  is_admin: boolean;
+
   @CreateDateColumn()
   created_at: Date;
 
